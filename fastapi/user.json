@@ -1,0 +1,13 @@
+[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "age": 30,
+        "isActive": true,
+        "role": "admin",
+        "createdAt": "2024-06-01T10:00:00Z",
+        "lastLogin": "2024-06-10T15:30:00Z",
+        "phone": "+1234567890"
+    }
+]
