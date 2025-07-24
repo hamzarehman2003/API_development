@@ -8,5 +8,10 @@
         "name": "Alice",
         "age": 25,
         "gender": "Female"
+    },
+    "5c12f8aadd7043c39fc4d3829a10f42e": {
+        "name": "Hamza",
+        "age": 25,
+        "gender": "Male"
     }
 }

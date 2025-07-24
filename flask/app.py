@@ -79,5 +79,48 @@ def add_session():
         return jsonify({"error": "Error occurred", "details": str(e)}), 500
 
 
+@app.route('/get_session_user', methods=['POST'])
+def get_session_user():
+    try:
+        # 1. Get the expected API key from environment
+        expected_api_key = os.getenv('API')
+
+        # 2. Get the provided API key from request headers
+        received_api_key = request.headers.get('x-api-key')
+
+        # 3. Check if the API key is missing or invalid
+        if not received_api_key:
+            return jsonify({"error": "API key needed"}), 401
+        if received_api_key != expected_api_key:
+            return jsonify({"error": "Unauthorized access"}), 403
+
+        # 4. Get session ID from the request body
+        data = request.get_json()
+        session_id = data.get("session_id")
+
+        # 5. Check if the session ID is provided
+        if not session_id:
+            return jsonify({"error": "Session ID is required"}), 400
+
+        # 6. Load the sessions from session.json file
+        session_file_path = 'db/sessions/session.json'
+        if os.path.exists(session_file_path):
+            with open(session_file_path, 'r') as file:
+                sessions = json.load(file)
+        else:
+            sessions = {}
+
+        # 7. Check if session ID exists in the session data
+        if session_id not in sessions:
+            return jsonify({"error": "Session ID not found"}), 404
+
+        # 8. Return the user info associated with the session ID
+        user_info = sessions[session_id]
+        return jsonify(user_info), 200
+
+    except Exception as e:
+        return jsonify({"error": "Error occurred", "details": str(e)}), 500
+
+
 if __name__ == '__main__':
     app.run(debug=True)
